@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles/main.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&family=Sue+Ellen+Francisco&display=swap" rel="stylesheet">
+    <title>API-pokou | Dashboard</title>
+</head>
+<body>
+
+
+<div class="email_sender__container">
+    <div class="client_list">
+        <div class="list_container">
+            <p id="list_btn">Liste des clients</p>
+            <div class="list_item">
+                <% allClient.forEach((client) => {%>
+                    <div class="client_item <%= client.mail_sent ? "sent_item" : "not_sent_item"%>">
+                        <div class="top_item">
+                            <p><mark>Nom: </mark><%= client.name ? client.name : " .."%></p>
+                            <p><mark>Email: </mark><%= client.email%></p>
+                        </div>
+                        <div class="bottom_item">
+                            <p><mark>Website: </mark><%= client.website ? client.website : " .."%></p>
+                            <p><mark>Envoyé: </mark><%= client.mail_sent === true ? "Oui" : "Non"%></p>
+                        </div>
+
+
+
+                    </div>
+                <%});%>
+
+            </div>
+        </div>
+    </div>
+    <div class="mail_template">
+        <p>Mail template:</p>
+        <a href="/simpleEmail" target="_blank">simpleEmail</a>
+
+    </div>
+    <div class="top__container">
+        <div class="top">
+
+            <div class="top_item">
+                <h2>Clients</h2>
+                <p> <%=client_length%></p>
+            </div>
+            <div class="top_item">
+                <h2>Mails envoyés</h2>
+                <p><%=sent_client%></p>
+            </div>
+            <div class="top_item">
+                <h2>Timer </h2>
+                <div class="dynamic_timer">
+                    <p> <%=time_before_done%></p>
+                    <div class="load">
+
+                        <% if (not_sent_client === 0) { %>
+
+                        <div class="ok_img load_item">
+                            <img alt="" src="https://res.cloudinary.com/dbzdlk98a/image/upload/v1637603801/pokouweb/basic-tick_lmnmuw.png">
+                        </div>
+
+                        <% } else { %>
+                        <div class="loading_img load_item">
+                            <svg width="45" height="45" viewBox="0 0 45 45" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+                                <g fill="none" fill-rule="evenodd" transform="translate(1 1)" stroke-width="2">
+                                    <circle stroke="#222" cx="22" cy="22" r="6" stroke-opacity="0">
+                                        <animate attributeName="r"
+                                                 begin="1.5s" dur="3s"
+                                                 values="6;22"
+                                                 calcMode="linear"
+                                                 repeatCount="indefinite" />
+                                        <animate attributeName="stroke-opacity"
+                                                 begin="1.5s" dur="3s"
+                                                 values="1;0" calcMode="linear"
+                                                 repeatCount="indefinite" />
+                                        <animate attributeName="stroke-width"
+                                                 begin="1.5s" dur="3s"
+                                                 values="2;0" calcMode="linear"
+                                                 repeatCount="indefinite" />
+                                    </circle>
+                                    <circle stroke="#222" cx="22" cy="22" r="6" stroke-opacity="0">
+                                        <animate attributeName="r"
+                                                 begin="3s" dur="3s"
+                                                 values="6;22"
+                                                 calcMode="linear"
+                                                 repeatCount="indefinite" />
+                                        <animate attributeName="stroke-opacity"
+                                                 begin="3s" dur="3s"
+                                                 values="1;0" calcMode="linear"
+                                                 repeatCount="indefinite" />
+                                        <animate attributeName="stroke-width"
+                                                 begin="3s" dur="3s"
+                                                 values="2;0" calcMode="linear"
+                                                 repeatCount="indefinite" />
+                                    </circle>
+                                    <circle stroke="#222" cx="22" cy="22" r="8">
+                                        <animate attributeName="r"
+                                                 begin="0s" dur="1.5s"
+                                                 values="6;1;2;3;4;5;6"
+                                                 calcMode="linear"
+                                                 repeatCount="indefinite" />
+                                    </circle>
+                                </g>
+                            </svg>
+                        </div>
+                        <% }%>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="bottom__container">
+
+
+
+        <div class="bottom_left">
+
+            <div class="button_box">
+                <div class="button_box__top">
+                    <button class="btn_style" id="btn">Envoyer</button>
+                    <button class="addBtn_style" id="addInput">ajouter un champ <p class="compteur">1</p></button>
+
+
+                    <p id="checkBTN">En direct ? <input type="checkbox" id="direct"
+                        ></p>
+                </div>
+                <div class="button_box__bottom">
+                    <p>Seul le premier formulaire sera envoyé</p>
+                    <div class="the_validation">
+                        <span id="validBtn_ckec">Vérifier </span>
+                        <p id="verification"></p>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+            </div>
+
+
+
+            <div class="form_container">
+
+                <form class="form_form first_form" id='clientForm' name="clientForm">
+                    <div class="input__container">
+                        <div class="input_field">
+                            <label for="name">Nom</label>
+                            <input  name="name" id="name" type="text"></input>
+                        </div>
+                        <div class="input_field">
+                            <label for="email">Email</label>
+                            <input class="first_form_email"  required name="email" id="email" type="email"></input>
+                        </div>
+                        <div class="input_field">
+                            <label for="website">Site internet</label>
+                            <input  name="website" id="website" type="text"></input>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+
+        </div>
+        <div class="bottom_right">
+            <div class="button_box">
+                <div class="box_left">
+                    <button id="chooseJson">?</button>
+                    <h5 id="jsonText">Type: JSON</h5>
+                </div>
+
+                <button id="jsonBTN" class="btn_style" >Envoyer</button>
+
+
+            </div>
+            <div class="text_box">
+                <div class="textearea_container">
+                    <div class="error active_modal">
+                        <div class="content_error">
+                            <span class="close_modal">x</span>
+                            <p>Respectez le format :</p>
+                            <div class="exemple_error">
+                                <span>[</span>
+                                <span class="span_space">  { "clef": valeur },</span>
+                                <span class="span_space">  { "clef": valeur },</span>
+                                <span>]</span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <textarea id="textArea" placeholder="{..."></textarea>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="hidden_form">
+        <form class="form_form" id='clientForm' name="clientForm">
+            <div class="input__container">
+                <div class="input_field">
+                    <label for="name">Nom</label>
+                    <input   name="name" id="name" type="text"></input>
+                </div>
+                <div class="input_field">
+                    <label for="email">Email</label>
+                    <input  required name="email" id="email" type="email"></input>
+                </div>
+                <div class="input_field">
+                    <label for="website">Site internet</label>
+                    <input  name="website" id="website" type="text"></input>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+
+</div>
+
+
+<div id="flash_box"><span id="flash_message">bonjour</span></div>
+
+<script>
+    const form = document.querySelector('#clientForm');
+    const errorModal = document.querySelector('.error')
+    const inputContainer = document.querySelector('.form_container');
+    const formBtn = document.querySelector('#btn')
+    const addBtn = document.querySelector('#addInput')
+    const compteur = document.querySelector('.compteur')
+    const page = document.querySelector('.email_sender__container')
+    const flash = document.querySelector('#flash_message')
+    const flash_box = document.querySelector('#flash_box');
+    const first_form = document.querySelector('.form_form');
+    const jsonBTN = document.querySelector('#jsonBTN')
+    const textArea = document.querySelector('#textArea')
+    const chooseJson = document.querySelector('#chooseJson')
+    const jsonText = document.querySelector('#jsonText')
+    const hidden = document.querySelector('.hidden_form')
+    const closeModalBtn = document.querySelector('.close_modal')
+    const directCheckbox = document.querySelector('#direct')
+    const checkBtn = document.querySelector('#checkBTN')
+    const verif = document.querySelector('#verification')
+    const activeText = document.querySelector('.button_box__bottom')
+    const firstInputMail = document.querySelector('.first_form_email')
+    const firstFormulaire = document.querySelector('.first_form')
+    const validBtn_ckec = document.querySelector('#validBtn_ckec')
+    const btnList = document.querySelector('#list_btn')
+    const laList = document.querySelector('.list_item')
+
+    first_form.addEventListener('change', function(){
+        if (this.checkValidity()) {
+            this.classList.add('active_form')
+        } else {
+            this.classList.remove('active_form')
+        }
+    } )
+
+    function remove_linebreaks(str) {
+        return str.replace( /\r\n|\n|\r/gm, "" );
+    }
+
+
+    function IsJsonString(str) {
+        try {
+
+            console.log(str);
+            JSON.parse(str);
+
+        } catch (e) {
+            return false;
+        }
+        return true;
+    }
+
+    const errorAnimation = () => {
+        error.classList.add('')
+    }
+
+    errorModal.addEventListener('click', (event) => {
+        if (errorModal === event.target) {
+            errorModal.classList.add('active_modal')
+        }
+    })
+
+    closeModalBtn.addEventListener('click', event => {
+        errorModal.classList.add('active_modal')
+    })
+
+    checkBtn.addEventListener('click', (event) => {
+        if (directCheckbox.checked) {
+            directCheckbox.checked = false
+            checkBtn.classList.remove('active_check')
+            activeText.classList.remove('active_bottom')
+            verif.classList.remove('display_verif')
+        } else {
+            directCheckbox.checked = true
+            checkBtn.classList.add('active_check')
+            activeText.classList.add('active_bottom')
+        }
+    })
+
+    firstInputMail.addEventListener('input', () => {
+        verif.classList.remove('display_verif')
+    })
+
+    const handleCheckClient = (params) => {
+        verif.classList.add('display_verif')
+        if (typeof (params) === "boolean") {
+            if (params) {
+                verif.innerHTML = "EXISTANT : Envoyé"
+                verif.classList.remove('green_style')
+                verif.classList.add('red_style')
+            } else {
+                verif.innerHTML = "EXISTANT : Non envoyé"
+                verif.classList.remove('red_style')
+                verif.classList.add('green_style')
+            }
+        } else {
+            verif.innerHTML = "INCONNU"
+            verif.classList.remove('red_style')
+            verif.classList.add('green_style')
+        }
+
+    }
+
+    btnList.addEventListener('click', () => {
+        if (btnList.classList.contains('active_list')) {
+            btnList.classList.remove('active_list')
+            laList.classList.remove('list_item_active')
+        } else {
+            btnList.classList.add('active_list')
+            laList.classList.add('list_item_active')
+        }
+    })
+
+
+
+    validBtn_ckec.addEventListener('click', function (event) {
+        console.log("boh")
+
+
+        if (firstFormulaire.checkValidity() ) {
+            console.log(firstInputMail.value)
+            let value = {email: firstInputMail.value }
+            console.log(JSON.stringify(value))
+            fetch('/client/get_client', {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(value)
+            }).then( response => response.json()
+            ).then((data) => {
+                handleCheckClient(data.value)
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+
+    })
+
+
+
+    jsonBTN.addEventListener('click' ,(event) => {
+        event.preventDefault()
+        const inputValue = remove_linebreaks(textArea.value)
+        console.log(inputValue);
+        const textAreaValue = IsJsonString(inputValue) ? JSON.parse(inputValue) : null
+        console.log(textAreaValue)
+
+        if ( textAreaValue && typeof(textAreaValue[0]) === "object") {
+            fetch('/client/client_json', {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(textAreaValue)
+            }).then( response => response.json()
+            ).then((data) => {
+                console.log(data)
+                flashAnimation(data.count)
+
+            }).catch((err) => {
+                console.log(err)
+            })
+        } else {
+            errorModal.classList.remove('active_modal')
+        }
+
+
+
+    })
+
+
+    chooseJson.addEventListener('click', (event) => {
+        event.preventDefault()
+        errorModal.classList.toggle('active_modal')
+
+
+
+
+
+    })
+
+
+    addBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        const clone_bloc = hidden.querySelector('.form_form')
+        console.log(inputContainer)
+        const form_bloc = clone_bloc.cloneNode(true);
+        inputContainer.appendChild(form_bloc);
+        form_bloc.addEventListener('change', function(){
+            if (this.checkValidity()) {
+                this.classList.add('active_form')
+            } else {
+                this.classList.remove('active_form')
+            }
+        } )
+
+
+        compteur_value = parseInt(compteur.innerText)
+        compteur.innerText = `${compteur_value + 1}`
+
+
+    })
+
+    const flashAnimation = (value) => {
+        page.classList.add('active')
+        let innerValue = ""
+        if (typeof (value) === "boolean") {
+            innerValue = value ? 'Le mail a été envoyé !' : 'Erreur de mail !'
+        } else {
+            innerValue = `${value} Client(s) ajouté ! `
+        }
+        setTimeout(() => {
+            flash.innerText = innerValue
+            flash_box.classList.add("active_flash")
+        }, 300);
+        setTimeout(() => {
+            location.reload();
+        }, 2000);
+
+    }
+
+
+    formBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        const allForm = inputContainer.querySelectorAll('.form_form');
+        const firstFormulaire = document.querySelector('.first_form')
+
+        if (directCheckbox.checked) {
+            console.log('en direct')
+            verif.innerHTML = "bonjour"
+            const firstFormform = new FormData(firstFormulaire)
+            const theObject = Object.fromEntries(firstFormform.entries())
+            fetch('/client/send_direct', {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(theObject)
+            }).then( response => response.json()
+            ).then((data) => {
+                console.log(data)
+               flashAnimation(data.value)
+            }).catch((err) => {
+                console.log(err)
+            })
+        } else {
+            const theObject = []
+            let key = []
+            allForm.forEach((form) => {
+                let newFormData = new FormData(form)
+                let newFormValue = Object.fromEntries(newFormData.entries());
+                theObject.push(newFormValue)
+            })
+            fetch('/client', {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(theObject)
+            }).then( response => response.json()
+            ).then((data) => {
+                console.log(data)
+                flashAnimation(data.count)
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+
+
+
+
+
+    })
+</script>
+
+
+
+
+</body>
+</html>
+
+

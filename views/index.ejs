@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="styles/main.css" type="text/css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&family=Sue+Ellen+Francisco&display=swap" rel="stylesheet">
+
+  <title>API-Pokou | Login</title>
+</head>
+<body>
+
+<div class="login__container">
+  <img src="https://res.cloudinary.com/dbzdlk98a/image/upload/v1634224740/pokouweb/pokou_logo_cjfdqe.svg" alt="">
+  <div class="login">
+    <form id="form_element">
+      <div class="input_login">
+        <label for="email">Email</label>
+        <input id="email" type="email" name="email" required>
+      </div>
+      <div class="input_login">
+        <label for="password">Mot de passe</label>
+        <input name="password" id="password" required type="password">
+      </div>
+      <div class="input_login">
+        <p id="submit">Entrer</p>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+
+<script>
+  const form = document.querySelector('#form_element');
+  const submitBtn = document.querySelector('#submit');
+  submitBtn.addEventListener('click', (event) => {
+    const form = document.querySelector('#form_element');
+    event.preventDefault()
+
+    if (form.checkValidity()) {
+      console.log('good');
+      const formValue = new FormData(form)
+      const theObject = Object.fromEntries(formValue.entries())
+      fetch('/users/login', {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(theObject)
+      }).then( response => response.json()
+      ).then((data) => {
+        console.log("oups")
+        localStorage.setItem("user", JSON.stringify(data.token))
+        window.location.replace('/dashboard')
+
+
+      }).catch((err) => {
+        console.log(err)
+      })
+    } else {
+      form.reportValidity()
+    }
+
+  })
+
+
+
+
+</script>
+
+</body>
+</html>
