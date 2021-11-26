@@ -21,6 +21,7 @@
     "node-sass-middleware": "0.11.0",
     "nodemailer": "^6.7.1",
     "nodemailer-smtp-transport": "^2.7.4",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "tar": "^6.1.11"
   }
 }

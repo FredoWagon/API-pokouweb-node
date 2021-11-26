@@ -18,6 +18,15 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+const connectDB = catchAsync(async () => {
+    await mongoose.connect(process.env.DATABASE,
+        {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+    console.log('Connexion à MongoDB réussie !')
+})
+
 
 const connectDB = (async () => {
   try {
