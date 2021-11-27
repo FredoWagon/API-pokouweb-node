@@ -10,6 +10,7 @@ const clientSchema = mongoose.Schema({
     website: {type: String},
 },{ timestamps: true });
 
+
 clientSchema.statics.mail_sent = function () {
     return this.find({ mail_sent: true }).sort({ createdAt: -1 });
 };
