@@ -6,9 +6,12 @@
 
 Built with:
 
-- [Next.js](https://nextjs.org/)
-- [GitHub Polyglot](https://github.com/IonicaBizau/node-gh-polyglot)
-- [Chart.js](https://www.chartjs.org/)
-- [React Flip Move](https://github.com/joshwcomeau/react-flip-move)
-- [Styled Components](https://www.styled-components.com/)
+- [Node.js](https://expressjs.com/fr/)
+- [Express.js](https://expressjs.com/fr/)
+- [Cpanel](https://cpanel.net/)
+- [JWT](https://jwt.io/)
+- [NodeMailer](https://nodemailer.com/)
+- [MongoDB](https://www.mongodb.com/)
+- [Node-cron](https://github.com/kelektiv/node-cron)
 
+---
